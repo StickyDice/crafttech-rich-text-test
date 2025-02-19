@@ -1,14 +1,14 @@
-import { ChangeEvent } from "react";
 import IControlProps from "~/components/control/IControlProps";
+import useControlVm from "~/components/control/useControlVm";
 import Tool from "~/Tool";
+import classes from "./control.module.scss";
 
 const Control = ({ tool, setTool }: IControlProps) => {
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTool(e.target.value as Tool);
-  };
+
+  const {handleOnChange} = useControlVm({setTool})
 
   return (
-    <div style={{ position: "absolute", top: 0 }}>
+    <div className={classes.controlContainer}>
       <div>
         <input
           type="radio"
@@ -31,6 +31,16 @@ const Control = ({ tool, setTool }: IControlProps) => {
           onChange={handleOnChange}
         />
         <label htmlFor="shape">Добавление</label>
+      </div>
+
+      <div>
+        <select defaultValue="rect" disabled={tool !== Tool.SHAPE}>
+          <option value="rect">rect</option>
+          <option value="circle">circle</option>
+          <option value="ellipse">ellipse</option>
+          <option value="wedge">wedge</option>
+          <option value="start">start</option>
+        </select>
       </div>
     </div>
   );
