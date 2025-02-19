@@ -1,6 +1,10 @@
-const Control = ({ tool, setTool }: any) => {
-  const handleOnChange = (e: any) => {
-    setTool(e.target.value);
+import { ChangeEvent } from "react";
+import IControlProps from "~/components/control/IControlProps";
+import Tool from "~/Tool";
+
+const Control = ({ tool, setTool }: IControlProps) => {
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setTool(e.target.value as Tool);
   };
 
   return (
@@ -10,8 +14,8 @@ const Control = ({ tool, setTool }: any) => {
           type="radio"
           id="cursor"
           name="control"
-          value="cursor"
-          checked={tool === "cursor"}
+          value={Tool.CURSOR}
+          checked={tool === Tool.CURSOR}
           onChange={handleOnChange}
         />
         <label htmlFor="cursor">Взаимодействие</label>
@@ -22,8 +26,8 @@ const Control = ({ tool, setTool }: any) => {
           type="radio"
           id="shape"
           name="control"
-          value="shape"
-          checked={tool === "shape"}
+          value={Tool.SHAPE}
+          checked={tool === Tool.SHAPE}
           onChange={handleOnChange}
         />
         <label htmlFor="shape">Добавление</label>
