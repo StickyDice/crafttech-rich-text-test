@@ -3,7 +3,7 @@ import Konva from "konva";
 import { Image } from "konva/lib/shapes/Image";
 import { MutableRefObject, RefObject, useState } from "react";
 import IShapeProps from "~/components/shape/IShapeProps";
-import Tool from "~/Tool";
+import Tool from "~/utils/Tool";
 
 type Deps = IShapeProps & {
   groupRef: RefObject<Konva.Group | null>;
@@ -43,7 +43,7 @@ export default function useShapeVm(deps: Deps) {
   };
 
   const handleClick = () => {
-    if (tool === Tool.SHAPE) {
+    if (tool !== Tool.CURSOR) {
       return;
     }
     setIsEditing((prev) => {

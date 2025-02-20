@@ -1,4 +1,22 @@
 .controlContainer {
   position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
   top: 0;
+}
+
+.iconContainer {
+  border: 5px solid black;
+  padding: 5px;
+  display: inline-block;
+}
+
+.selected {
+  border-color: blue;
+}
+
+.hiddenRadio {
+  display: none;
+
 }

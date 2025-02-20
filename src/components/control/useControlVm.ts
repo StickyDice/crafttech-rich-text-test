@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react";
-import Tool from "~/Tool";
+import Tool from "~/utils/Tool";
 import { SetState } from "~/utils/types/SetState";
 
 type Deps = {

@@ -1,6 +1,6 @@
 import { KonvaEventObject } from "konva/lib/Node";
 import { useState } from "react";
-import Tool from "~/Tool";
+import Tool from "~/utils/Tool";
 
 export type Figure = {
   id: string;

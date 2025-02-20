@@ -1,6 +1,6 @@
 import IControlProps from "~/components/control/IControlProps";
 import useControlVm from "~/components/control/useControlVm";
-import Tool from "~/Tool";
+import Tool from "~/utils/Tool";
 import classes from "./control.module.scss";
 
 const Control = ({ tool, setTool }: IControlProps) => {
@@ -8,39 +8,30 @@ const Control = ({ tool, setTool }: IControlProps) => {
 
   return (
     <div className={classes.controlContainer}>
-      <div>
-        <input
-          type="radio"
-          id="cursor"
-          name="control"
-          value={Tool.CURSOR}
-          checked={tool === Tool.CURSOR}
-          onChange={handleOnChange}
-        />
-        <label htmlFor="cursor">Взаимодействие</label>
-      </div>
-
-      <div>
-        <input
-          type="radio"
-          id="shape"
-          name="control"
-          value={Tool.SHAPE}
-          checked={tool === Tool.SHAPE}
-          onChange={handleOnChange}
-        />
-        <label htmlFor="shape">Добавление</label>
-      </div>
-
-      <div>
-        <select defaultValue="rect" disabled={tool !== Tool.SHAPE}>
-          <option value="rect">rect</option>
-          <option value="circle">circle</option>
-          <option value="ellipse">ellipse</option>
-          <option value="wedge">wedge</option>
-          <option value="start">start</option>
-        </select>
-      </div>
+      {Object.values(Tool).map((toolType) => (
+        <div
+          key={toolType}
+          className={`${classes.iconContainer} ${tool === toolType ? classes.selected : ""}`}
+        >
+          <input
+            type="radio"
+            id={toolType}
+            name="control"
+            value={toolType}
+            checked={tool === toolType}
+            onChange={handleOnChange}
+            className={classes.hiddenRadio}
+          />
+          <label htmlFor={toolType}>
+            <img
+              src={`/${toolType.toLowerCase()}.png`}
+              alt={toolType}
+              width={20}
+              height={20}
+            />
+          </label>
+        </div>
+      ))}
     </div>
   );
 };

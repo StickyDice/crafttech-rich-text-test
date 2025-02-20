@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import "./App.css";
 import Canvas from "./components/canvas/Canvas";
 import Control from "./components/control/Control";
-import Tool from "~/Tool";
+import Tool from "~/utils/Tool";
 
 function App() {
   const [tool, setTool] = useState<Tool>(Tool.CURSOR);

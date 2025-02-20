@@ -1,4 +1,4 @@
-import Tool from "~/Tool";
+import Tool from "~/utils/Tool";
 import { SetState } from "~/utils/types/SetState";
 
 export default interface IControlProps {

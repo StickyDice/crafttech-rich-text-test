@@ -1,7 +1,7 @@
 import { Layer, Stage } from "react-konva";
 import Shape from "../shape/Shape";
 import ICanvasProps from "~/components/canvas/ICanvasProps";
-import Tool from "~/Tool";
+import Tool from "~/utils/Tool";
 import useCanvasVm, { Figure } from "~/components/canvas/useCanvasVm";
 
 const Canvas = ({ tool, stageRef }: ICanvasProps) => {

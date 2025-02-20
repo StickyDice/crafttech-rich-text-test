@@ -8,7 +8,7 @@ import useShapeVm from "~/components/shape/useShapeVm";
 import { useRef } from "react";
 import TextEditor from "~/components/TextEditor/TextEditor";
 import classes from "./shape.module.scss";
-import Tool from "~/Tool";
+import Tool from "~/utils/Tool";
 
 const Shape = (props: IShapeProps) => {
   const { x, y, width, height, html, id, tool } = props;
