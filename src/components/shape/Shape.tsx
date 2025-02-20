@@ -1,5 +1,5 @@
 import Konva from "konva";
-import { Group, Rect } from "react-konva";
+import { Group } from "react-konva";
 import { Html } from "react-konva-utils";
 import HtmlText from "../htmlText/HtmlText";
 import { Image } from "konva/lib/shapes/Image";
@@ -11,7 +11,7 @@ import classes from "./shape.module.scss";
 import Tool from "~/utils/Tool";
 
 const Shape = (props: IShapeProps) => {
-  const { x, y, width, height, html, id, tool } = props;
+  const { shape, shapeProps, tool } = props;
 
   const groupRef = useRef<Konva.Group | null>(null);
   const imageRef = useRef<Image | null>(null);
@@ -27,26 +27,23 @@ const Shape = (props: IShapeProps) => {
   return (
     <>
       <Group
-        x={x}
-        y={y}
+        x={shapeProps.x}
+        y={shapeProps.y}
         onClick={handleClick}
         ref={groupRef}
         draggable={tool === Tool.CURSOR}
       >
-        <Rect stroke={"black"} width={width} height={height} />
+        {shape}
         {isEditing && (
           <Html>
-            <div
-              className={classes.textEditorContainer}
-              style={{ left: width }}
-            >
+            <div className={classes.textEditorContainer}>
               <TextEditor value={value} handleChange={handleInput} />
             </div>
           </Html>
         )}
       </Group>
       <Html>
-        <HtmlText ref={htmlRef} html={html} id={id} />
+        <HtmlText ref={htmlRef} html={shapeProps.html} id={shapeProps.id} />
       </Html>
     </>
   );

@@ -1,17 +1,8 @@
 import { KonvaEventObject } from "konva/lib/Node";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import BaseFigure from "~/figure/BaseFigure";
+import FigureGenerator from "~/utils/figureGenerator";
 import Tool from "~/utils/Tool";
-
-export type Figure = {
-  id: string;
-  width: number;
-  height: number;
-  type: "rect";
-  x: number;
-  y: number;
-  html: string;
-  text: string;
-};
 
 type Deps = {
   tool: Tool;
@@ -24,7 +15,9 @@ type Position = {
 
 export default function useCanvasVm(deps: Deps) {
   const { tool } = deps;
-  const [figures, setFigures] = useState<Figure[]>([]);
+  const [figures, setFigures] = useState<BaseFigure[]>([]);
+
+  const figureGenerator = useRef(new FigureGenerator());
 
   const [startPosition, setStartPosition] = useState<Position | undefined>(
     undefined,
@@ -35,6 +28,15 @@ export default function useCanvasVm(deps: Deps) {
     const point = getCursorCoordinatedFromEvent(tool, e);
 
     if (!point) return;
+    const figure = figureGenerator.current.generateFigureBasedOnTool(
+      tool,
+      point.x,
+      point.y,
+    );
+
+    if (!figure) return;
+
+    setFigures((prev) => [...prev, figure]);
 
     setIsCapturing(true);
 
@@ -42,36 +44,32 @@ export default function useCanvasVm(deps: Deps) {
   };
 
   const handleMouseMove = (e: KonvaEventObject<MouseEvent>) => {
-    if (!isCapturing) return;
+    if (!isCapturing || !startPosition) return;
 
     const point = getCursorCoordinatedFromEvent(tool, e);
 
     if (!point) return;
 
-    const width = startPosition!.x - point.x;
-    const height = startPosition!.y - point.y;
+    const width = startPosition.x - point.x;
+    const height = startPosition.y - point.y;
 
-    setFigures((prev: Figure[]) => [
-      ...prev.slice(0, prev.length - 1),
-      {
-        id: Date.now().toString(36),
-        width: width,
-        height: height,
-        type: "rect",
-        x: point.x,
-        y: point.y,
-        html: "",
-        text: "",
-      },
-    ]);
+    setFigures((prev) => {
+      const figure = figureGenerator.current.generateFigureBasedOnTool(
+        tool,
+        startPosition.x,
+        startPosition.y,
+      );
+      if (!figure) return prev;
+
+      figure.width = -width;
+      figure.height = -height;
+      return [...prev.slice(0, prev.length - 1), figure];
+    });
   };
 
-  /**
-   * Не нужно делать ничего кроме сброса isCapturing, т.к.
-   * фигура сохранена в коллбэке handleMouseMove
-   */
   const handleMouseUp = () => {
     setIsCapturing(false);
+    setStartPosition(undefined);
   };
 
   return {

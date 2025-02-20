@@ -1,9 +1,11 @@
 import { Stage } from "konva/lib/Stage";
-import { RefObject } from "react";
-import { Figure } from "~/components/canvas/useCanvasVm";
+import { ReactNode, RefObject } from "react";
+import BaseFigure from "~/figure/BaseFigure";
 import Tool from "~/utils/Tool";
 
-export default interface IShapeProps extends Figure {
+export default interface IShapeProps {
   stageRef: RefObject<Stage>;
   tool: Tool;
+  shape: ReactNode;
+  shapeProps: BaseFigure;
 }
