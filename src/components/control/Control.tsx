@@ -4,8 +4,7 @@ import Tool from "~/Tool";
 import classes from "./control.module.scss";
 
 const Control = ({ tool, setTool }: IControlProps) => {
-
-  const {handleOnChange} = useControlVm({setTool})
+  const { handleOnChange } = useControlVm({ setTool });
 
   return (
     <div className={classes.controlContainer}>

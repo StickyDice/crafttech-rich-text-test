@@ -7,7 +7,7 @@ import IShapeProps from "~/components/shape/IShapeProps";
 import useShapeVm from "~/components/shape/useShapeVm";
 import { useRef } from "react";
 import TextEditor from "~/components/TextEditor/TextEditor";
-import classes from "./shape.module.scss"
+import classes from "./shape.module.scss";
 import Tool from "~/Tool";
 
 const Shape = (props: IShapeProps) => {
@@ -17,15 +17,28 @@ const Shape = (props: IShapeProps) => {
   const imageRef = useRef<Image | null>(null);
   const htmlRef = useRef<HTMLDivElement>(null);
 
-  const {handleClick, handleInput, isEditing, value} = useShapeVm({...props, groupRef, imageRef});
+  const { handleClick, handleInput, isEditing, value } = useShapeVm({
+    ...props,
+    groupRef,
+    imageRef,
+  });
 
   return (
     <>
-      <Group x={x} y={y} onClick={handleClick} ref={groupRef} draggable={tool === Tool.CURSOR}>
+      <Group
+        x={x}
+        y={y}
+        onClick={handleClick}
+        ref={groupRef}
+        draggable={tool === Tool.CURSOR}
+      >
         <Rect stroke={"black"} width={width} height={height} />
         {isEditing && (
           <Html>
-            <div className={classes.textEditorContainer} style={{left: width}}>
+            <div
+              className={classes.textEditorContainer}
+              style={{ left: width }}
+            >
               <TextEditor value={value} handleChange={handleInput} />
             </div>
           </Html>

@@ -5,8 +5,8 @@ import Tool from "~/Tool";
 import useCanvasVm, { Figure } from "~/components/canvas/useCanvasVm";
 
 const Canvas = ({ tool, stageRef }: ICanvasProps) => {
-  
-  const {handleMouseDown, handleMouseMove, handleMouseUp, figures} = useCanvasVm({tool})
+  const { handleMouseDown, handleMouseMove, handleMouseUp, figures } =
+    useCanvasVm({ tool });
 
   return (
     <Stage

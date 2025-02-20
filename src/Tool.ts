@@ -1,6 +1,6 @@
 enum Tool {
   CURSOR = "cursor",
-  SHAPE = "shape"
+  SHAPE = "shape",
 }
 
-export default Tool
+export default Tool;

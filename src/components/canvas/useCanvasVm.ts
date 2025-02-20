@@ -11,22 +11,24 @@ export type Figure = {
   y: number;
   html: string;
   text: string;
-}
+};
 
 type Deps = {
-  tool: Tool
-}
+  tool: Tool;
+};
 
 type Position = {
   x: number;
   y: number;
-}
+};
 
 export default function useCanvasVm(deps: Deps) {
-  const {tool} = deps;
+  const { tool } = deps;
   const [figures, setFigures] = useState<Figure[]>([]);
 
-  const [startPosition, setStartPosition] = useState<Position | undefined>(undefined);
+  const [startPosition, setStartPosition] = useState<Position | undefined>(
+    undefined,
+  );
   const [isCapturing, setIsCapturing] = useState(false);
 
   const handleMouseDown = (e: KonvaEventObject<MouseEvent>) => {
@@ -36,8 +38,8 @@ export default function useCanvasVm(deps: Deps) {
 
     setIsCapturing(true);
 
-    setStartPosition(point)
-  }
+    setStartPosition(point);
+  };
 
   const handleMouseMove = (e: KonvaEventObject<MouseEvent>) => {
     if (!isCapturing) return;
@@ -62,7 +64,7 @@ export default function useCanvasVm(deps: Deps) {
         text: "",
       },
     ]);
-  }
+  };
 
   const handleMouseUp = (e: KonvaEventObject<MouseEvent>) => {
     if (tool === Tool.CURSOR) return;
@@ -88,17 +90,20 @@ export default function useCanvasVm(deps: Deps) {
     ]);
 
     setIsCapturing(false);
-  }
+  };
 
   return {
     figures,
     handleMouseDown,
     handleMouseMove,
     handleMouseUp,
-  }
+  };
 }
 
-function getCursorCoordinatedFromEvent(tool: Tool, e: KonvaEventObject<MouseEvent>): null | Position {
+function getCursorCoordinatedFromEvent(
+  tool: Tool,
+  e: KonvaEventObject<MouseEvent>,
+): null | Position {
   if (tool === Tool.CURSOR) return null;
 
   const stage = e.target.getStage();

@@ -6,12 +6,12 @@ import IShapeProps from "~/components/shape/IShapeProps";
 import Tool from "~/Tool";
 
 type Deps = IShapeProps & {
-  groupRef: RefObject<Konva.Group | null>
-  imageRef: MutableRefObject<Image | null>
-}
+  groupRef: RefObject<Konva.Group | null>;
+  imageRef: MutableRefObject<Image | null>;
+};
 
 export default function useShapeVm(deps: Deps) {
-  const {groupRef, imageRef, id, height, tool, width} = deps;
+  const { groupRef, imageRef, id, height, tool, width } = deps;
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState("");
 
@@ -21,7 +21,7 @@ export default function useShapeVm(deps: Deps) {
     if (!htmltext) return;
 
     htmltext.innerHTML = value;
-    
+
     const canvas = await html2canvas(htmltext, {
       backgroundColor: "rgba(0,0,0,0)",
       useCORS: true,
@@ -40,7 +40,7 @@ export default function useShapeVm(deps: Deps) {
     }
 
     imageRef.current = shape;
-  }
+  };
 
   const handleClick = () => {
     if (tool === Tool.SHAPE) {
@@ -59,7 +59,7 @@ export default function useShapeVm(deps: Deps) {
     if (imageRef.current) {
       imageRef.current.opacity(isEditing ? 1 : 0);
     }
-  }
+  };
 
   const handleInput = (value: string) => {
     setValue(value);
@@ -69,6 +69,6 @@ export default function useShapeVm(deps: Deps) {
     handleClick,
     handleInput,
     isEditing,
-    value
-  }
+    value,
+  };
 }
