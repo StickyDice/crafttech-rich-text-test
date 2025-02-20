@@ -66,29 +66,11 @@ export default function useCanvasVm(deps: Deps) {
     ]);
   };
 
-  const handleMouseUp = (e: KonvaEventObject<MouseEvent>) => {
-    if (tool === Tool.CURSOR) return;
-
-    const point = getCursorCoordinatedFromEvent(tool, e);
-    if (!point) return;
-
-    const width = startPosition!.x - point.x;
-    const height = startPosition!.y - point.y;
-
-    setFigures((prev: Figure[]) => [
-      ...prev,
-      {
-        id: Date.now().toString(36),
-        width: width,
-        height: height,
-        type: "rect",
-        x: point.x,
-        y: point.y,
-        html: "",
-        text: "",
-      },
-    ]);
-
+  /**
+   * Не нужно делать ничего кроме сброса isCapturing, т.к.
+   * фигура сохранена в коллбэке handleMouseMove
+   */
+  const handleMouseUp = () => {
     setIsCapturing(false);
   };
 
@@ -114,7 +96,7 @@ function getCursorCoordinatedFromEvent(
   if (!point) return null;
 
   return {
-    x: point.x - stageOffset.x,
-    y: point.y - stageOffset.y,
+    x: Math.abs(point.x - stageOffset.x),
+    y: Math.abs(point.y - stageOffset.y),
   };
 }

@@ -21,6 +21,7 @@ const Shape = (props: IShapeProps) => {
     ...props,
     groupRef,
     imageRef,
+    htmlRef,
   });
 
   return (

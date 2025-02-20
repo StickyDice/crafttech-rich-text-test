@@ -8,19 +8,22 @@ import Tool from "~/utils/Tool";
 type Deps = IShapeProps & {
   groupRef: RefObject<Konva.Group | null>;
   imageRef: MutableRefObject<Image | null>;
+  htmlRef: RefObject<HTMLDivElement>;
 };
 
 export default function useShapeVm(deps: Deps) {
-  const { groupRef, imageRef, id, height, tool, width } = deps;
+  const { groupRef, imageRef, id, height, tool, width, htmlRef } = deps;
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState("");
 
   const renderImage = async () => {
     const htmltext = document.getElementById(`htmltext_${id}`);
 
-    if (!htmltext) return;
+    if (!htmltext || !htmlRef.current) return;
 
     htmltext.innerHTML = value;
+    htmlRef.current.style.width = Math.abs(width) + "px";
+    console.log("width", width);
 
     const canvas = await html2canvas(htmltext, {
       backgroundColor: "rgba(0,0,0,0)",
@@ -28,7 +31,7 @@ export default function useShapeVm(deps: Deps) {
     });
 
     const shape = new Konva.Image({
-      x: width / 2 - canvas.width / 2,
+      x: width,
       y: height / 2 - canvas.height / 2,
       scaleX: 1 / window.devicePixelRatio,
       scaleY: 1 / window.devicePixelRatio,
